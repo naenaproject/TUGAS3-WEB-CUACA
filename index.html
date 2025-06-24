@@ -3,68 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Web Cuaca</title>
+  <title>Aplikasi Cek Cuaca</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to top, #e0f7fa, #80deea);
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #b2ebf2);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       text-align: center;
-      padding: 40px;
+      width: 100%;
+      max-width: 400px;
     }
     h1 {
       color: #00796b;
+      margin-bottom: 20px;
     }
-    .weather-box {
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      max-width: 400px;
-      margin: auto;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-    .weather-box input {
+    input[type="text"] {
+      width: 80%;
       padding: 10px;
-      width: 70%;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
     }
-    .weather-box button {
+    button {
       padding: 10px 20px;
       background-color: #00796b;
       color: white;
       border: none;
+      border-radius: 8px;
+      font-size: 16px;
       cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #004d40;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
     }
   </style>
 </head>
 <body>
-
-  <h1>Cek Cuaca</h1>
-  <div class="weather-box">
-    <input type="text" id="cityInput" placeholder="Masukkan nama kota">
-    <button onclick="getWeather()">Cek Cuaca</button>
-    <div id="result" style="margin-top: 20px;"></div>
+  <div class="container">
+    <h1>🌀 Cek Cuaca</h1>
+    <input type="text" id="cityInput" placeholder="Masukkan nama kota...">
+    <br>
+    <button onclick="getWeather()">Lihat Cuaca</button>
+    <div id="result"></div>
   </div>
 
   <script>
-    async function getWeather() {
-      const city = document.getElementById('cityInput').value;
+    function getWeather() {
+      const city = document.getElementById('cityInput').value.trim();
+      const result = document.getElementById('result');
       if (!city) {
-        alert("Kota tidak boleh kosong");
+        result.innerHTML = "❗ Mohon masukkan nama kota.";
         return;
       }
 
-      const apiKey = 'YOUR_API_KEY'; // Ganti dengan API key jika ingin dinamis
-      const dummyWeather = {
-        "Jakarta": "Cerah Berawan, 32°C",
-        "Bandung": "Hujan Ringan, 24°C",
-        "Surabaya": "Panas Terik, 35°C"
+      // Cuaca dummy (statik)
+      const weatherData = {
+        "jakarta": "🌤 Cerah, 32°C",
+        "bandung": "🌧 Hujan ringan, 24°C",
+        "surabaya": "☀️ Panas, 35°C",
+        "yogyakarta": "⛅ Berawan, 28°C"
       };
 
-      const resultBox = document.getElementById('result');
-      const weather = dummyWeather[city] || "Data cuaca tidak ditemukan untuk kota " + city;
-      resultBox.innerHTML = "<strong>" + city + "</strong><br>" + weather;
+      const lowerCity = city.toLowerCase();
+      const weather = weatherData[lowerCity];
+
+      if (weather) {
+        result.innerHTML = `<strong>${city}</strong><br>${weather}`;
+      } else {
+        result.innerHTML = `Cuaca untuk <strong>${city}</strong> belum tersedia.`;
+      }
     }
   </script>
-
 </body>
 </html>
