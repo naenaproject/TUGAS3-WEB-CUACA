@@ -1,33 +1,70 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Web Cuaca</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to top, #e0f7fa, #80deea);
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: #00796b;
+    }
+    .weather-box {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .weather-box input {
+      padding: 10px;
+      width: 70%;
+      margin-bottom: 10px;
+    }
+    .weather-box button {
+      padding: 10px 20px;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <h1>Web Cuaca Sederhana</h1>
-  <p>Masukkan kota untuk cek cuaca:</p>
-  <input type="text" id="city" placeholder="Contoh: Jakarta" />
-  <button onclick="getWeather()">Cek Cuaca</button>
-  <div id="result"></div>
+
+  <h1>Cek Cuaca</h1>
+  <div class="weather-box">
+    <input type="text" id="cityInput" placeholder="Masukkan nama kota">
+    <button onclick="getWeather()">Cek Cuaca</button>
+    <div id="result" style="margin-top: 20px;"></div>
+  </div>
 
   <script>
-    function getWeather() {
-      const city = document.getElementById("city").value;
-      const apiKey = "b6907d289e10d714a6e88b30761fae22"; // contoh API key OpenWeatherMap (demo)
-      const url = `https://samples.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    async function getWeather() {
+      const city = document.getElementById('cityInput').value;
+      if (!city) {
+        alert("Kota tidak boleh kosong");
+        return;
+      }
 
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById("result").innerHTML = 
-            `<p>Cuaca di ${data.name}: ${data.weather[0].description}, Suhu: ${data.main.temp}°C</p>`;
-        })
-        .catch(() => {
-          document.getElementById("result").innerHTML = "<p>Kota tidak ditemukan atau error.</p>";
-        });
+      const apiKey = 'YOUR_API_KEY'; // Ganti dengan API key jika ingin dinamis
+      const dummyWeather = {
+        "Jakarta": "Cerah Berawan, 32°C",
+        "Bandung": "Hujan Ringan, 24°C",
+        "Surabaya": "Panas Terik, 35°C"
+      };
+
+      const resultBox = document.getElementById('result');
+      const weather = dummyWeather[city] || "Data cuaca tidak ditemukan untuk kota " + city;
+      resultBox.innerHTML = "<strong>" + city + "</strong><br>" + weather;
     }
   </script>
+
 </body>
 </html>
