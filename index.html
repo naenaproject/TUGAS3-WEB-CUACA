@@ -1,55 +1,65 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Cuaca</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Aplikasi Cek Cuaca</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aplikasi Cuaca Sederhana</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #e0f7fa, #b2ebf2);
       margin: 0;
       padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #b2ebf2);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
+
     .container {
-      background: white;
+      background-color: #ffffff;
       padding: 30px 40px;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
       text-align: center;
       width: 100%;
       max-width: 400px;
     }
+
     h1 {
-      color: #00796b;
       margin-bottom: 20px;
+      color: #00796b;
     }
+
     input[type="text"] {
-      width: 80%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      width: 100%;
+      padding: 12px;
       font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 15px;
     }
+
     button {
-      padding: 10px 20px;
+      width: 100%;
+      padding: 12px;
       background-color: #00796b;
       color: white;
-      border: none;
-      border-radius: 8px;
       font-size: 16px;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
       transition: background 0.3s ease;
     }
+
     button:hover {
       background-color: #004d40;
     }
+
     #result {
       margin-top: 20px;
       font-size: 18px;
@@ -59,37 +69,34 @@
 </head>
 <body>
   <div class="container">
-    <h1>🌀 Cek Cuaca</h1>
-    <input type="text" id="cityInput" placeholder="Masukkan nama kota...">
-    <br>
+    <h1>🌦️ Cek Cuaca</h1>
+    <input type="text" id="cityInput" placeholder="Masukkan nama kota..." />
     <button onclick="getWeather()">Lihat Cuaca</button>
     <div id="result"></div>
   </div>
 
   <script>
     function getWeather() {
-      const city = document.getElementById('cityInput').value.trim();
-      const result = document.getElementById('result');
+      const city = document.getElementById("cityInput").value.trim().toLowerCase();
+      const resultDiv = document.getElementById("result");
+
       if (!city) {
-        result.innerHTML = "❗ Mohon masukkan nama kota.";
+        resultDiv.innerHTML = "⚠️ Mohon masukkan nama kota.";
         return;
       }
 
-      // Cuaca dummy (statik)
       const weatherData = {
-        "jakarta": "🌤 Cerah, 32°C",
-        "bandung": "🌧 Hujan ringan, 24°C",
+        "jakarta": "☀️ Cerah, 32°C",
+        "bandung": "🌧️ Hujan Ringan, 24°C",
         "surabaya": "☀️ Panas, 35°C",
-        "yogyakarta": "⛅ Berawan, 28°C"
+        "yogyakarta": "⛅ Berawan, 28°C",
+        "medan": "🌦️ Hujan Lokal, 29°C"
       };
 
-      const lowerCity = city.toLowerCase();
-      const weather = weatherData[lowerCity];
-
-      if (weather) {
-        result.innerHTML = `<strong>${city}</strong><br>${weather}`;
+      if (weatherData[city]) {
+        resultDiv.innerHTML = `<strong>${city.toUpperCase()}</strong><br>${weatherData[city]}`;
       } else {
-        result.innerHTML = `Cuaca untuk <strong>${city}</strong> belum tersedia.`;
+        resultDiv.innerHTML = `❌ Data cuaca untuk <strong>${city}</strong> belum tersedia.`;
       }
     }
   </script>
