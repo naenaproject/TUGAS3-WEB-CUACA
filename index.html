@@ -2,27 +2,32 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Web Cuaca - Naelun</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web Cuaca</title>
 </head>
 <body>
-  <header>
-    <h1>Info Cuaca Hari Ini</h1>
-    <p>Kota: Jakarta</p>
-  </header>
+  <h1>Web Cuaca Sederhana</h1>
+  <p>Masukkan kota untuk cek cuaca:</p>
+  <input type="text" id="city" placeholder="Contoh: Jakarta" />
+  <button onclick="getWeather()">Cek Cuaca</button>
+  <div id="result"></div>
 
-  <main>
-    <div class="card">
-      <h2>🌤️ Cerah Berawan</h2>
-      <p>Suhu: 30°C</p>
-      <p>Kelembapan: 60%</p>
-      <p>Angin: 15 km/jam</p>
-    </div>
-  </main>
+  <script>
+    function getWeather() {
+      const city = document.getElementById("city").value;
+      const apiKey = "b6907d289e10d714a6e88b30761fae22"; // contoh API key OpenWeatherMap (demo)
+      const url = `https://samples.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-  <footer>
-    <p>© 2025 Naelun - Tugas Web Cuaca</p>
-  </footer>
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("result").innerHTML = 
+            `<p>Cuaca di ${data.name}: ${data.weather[0].description}, Suhu: ${data.main.temp}°C</p>`;
+        })
+        .catch(() => {
+          document.getElementById("result").innerHTML = "<p>Kota tidak ditemukan atau error.</p>";
+        });
+    }
+  </script>
 </body>
 </html>
